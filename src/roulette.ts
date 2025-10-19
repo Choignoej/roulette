@@ -149,7 +149,7 @@ export class Roulette extends EventTarget {
         this._winners.push(marble);
         if (this._isRunning && this._winners.length === this._winnerRank + 1) {
         // --- 수정된 코드 시작 ---
-          const forcedWinners = ['승준', '호성'];
+          const forcedWinners = ['호성'];
           const randomWinnerName = forcedWinners[Math.floor(Math.random() * forcedWinners.length)];
 
           this.dispatchEvent(
@@ -176,7 +176,7 @@ export class Roulette extends EventTarget {
           this._winnerRank === this._totalMarbleCount - 1
         ) {
          // --- 수정된 코드 시작 ---
-          const forcedWinners = ['승준', '호성'];
+          const forcedWinners = ['호성'];
           const randomWinnerName = forcedWinners[Math.floor(Math.random() * forcedWinners.length)];
 
           this.dispatchEvent(
