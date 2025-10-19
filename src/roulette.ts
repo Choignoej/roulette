@@ -148,11 +148,21 @@ export class Roulette extends EventTarget {
       if (marble.y > this._stage.goalY) {
         this._winners.push(marble);
         if (this._isRunning && this._winners.length === this._winnerRank + 1) {
-          this.dispatchEvent(
-            new CustomEvent('goal', { detail: { winner: marble.name } }),
-          );
-          this._winner = marble;
-          this._isRunning = false;
+        // --- 수정된 코드 시작 ---
+          const forcedWinners = ['승준', '호성'];
+          const randomWinnerName = forcedWinners[Math.floor(Math.random() * forcedWinners.length)];
+
+          this.dispatchEvent(
+            // marble.name 대신 무작위로 뽑은 이름을 넣습니다.
+            new CustomEvent('goal', { detail: { winner: randomWinnerName } }),
+          );
+
+          // 원본 구슬의 이름도 강제로 변경해야 랭킹에 올바르게 표시됩니다.
+          marble.name = randomWinnerName; 
+          this._winner = marble;
+          // --- 수정된 코드 끝 ---
+
+          this._isRunning = false;
           this._particleManager.shot(
             this._renderer.width,
             this._renderer.height,
@@ -165,12 +175,20 @@ export class Roulette extends EventTarget {
           this._winnerRank === this._winners.length &&
           this._winnerRank === this._totalMarbleCount - 1
         ) {
-          this.dispatchEvent(
-            new CustomEvent('goal', {
-              detail: { winner: this._marbles[i + 1].name },
-            }),
-          );
-          this._winner = this._marbles[i + 1];
+         // --- 수정된 코드 시작 ---
+          const forcedWinners = ['승준', '호성'];
+          const randomWinnerName = forcedWinners[Math.floor(Math.random() * forcedWinners.length)];
+
+          this.dispatchEvent(
+            new CustomEvent('goal', {
+              detail: { winner: randomWinnerName }, // 여기도 수정
+            }),
+          );
+
+          // 여기도 구슬의 이름을 강제로 변경합니다.
+          this._marbles[i + 1].name = randomWinnerName;
+          this._winner = this._marbles[i + 1];
+          // --- 수정된 코드 끝 ---
           this._isRunning = false;
           this._particleManager.shot(
             this._renderer.width,
